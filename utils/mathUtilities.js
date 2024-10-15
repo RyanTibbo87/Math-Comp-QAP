@@ -58,24 +58,7 @@ function isCorrectAnswer(question, userAnswer) {
   return Math.abs(correctAnswer - userAnswer) < 0.01;
 }
 
-let leaderboard = [];
-
-function updateLeaderboard(playerName, streak) {
-  const timestamp = new Date().toLocaleString();
-  leaderboard.push({ name: playerName, streak, timestamp });
-
-  leaderboard.sort((a, b) => b.streak - a.streak);
-
-  leaderboard = leaderboard.slice(0, 10);
-}
-
-function getLeaderboard() {
-  return leaderboard;
-}
-
 module.exports = {
   getQuestion,
   isCorrectAnswer,
-  updateLeaderboard,
-  getLeaderboard,
 };

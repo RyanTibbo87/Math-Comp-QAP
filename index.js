@@ -1,12 +1,7 @@
 const express = require("express");
 const app = express();
 const port = 3000;
-const {
-  getQuestion,
-  isCorrectAnswer,
-  updateLeaderboard,
-  getLeaderboard,
-} = require("./utils/mathUtilities");
+const { getQuestion, isCorrectAnswer } = require("./utils/mathUtilities");
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true })); // For parsing form data
@@ -55,15 +50,8 @@ app.post("/quiz", (req, res) => {
   }
 });
 
-app.get("/leaderboards", (req, res) => {
-  const leaderboard = getLeaderboard();
-  res.render("leaderboards", { leaderboard });
-});
-app.post("/leaderboards", (req, res) => {
-  const playerName = req.body.playerName;
-  const streak = req.session.streak || 0;
-  updateLeaderboard(playerName, streak);
-  res.redirect("/leaderboards");
+app.get("/leaderboard", (req, res) => {
+  res.render("leaderboard", { leaderboard });
 });
 
 app.listen(port, () => {

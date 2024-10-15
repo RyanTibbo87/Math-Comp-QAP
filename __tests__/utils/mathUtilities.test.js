@@ -52,27 +52,27 @@ describe("Math Utilities", () => {
 
   describe("isCorrectAnswer", () => {
     test("correctly evaluates addition", () => {
-      expect(isCorrectAnswer("5 + 3", 8)).toBe(true);
-      expect(isCorrectAnswer("5 + 3", 9)).toBe(false);
+      expect(isCorrectAnswer("7 + 1", 8)).toBe(true);
+      expect(isCorrectAnswer("7 + 1", 9)).toBe(false);
     });
 
     test("correctly evaluates subtraction", () => {
-      expect(isCorrectAnswer("10 - 4", 6)).toBe(true);
-      expect(isCorrectAnswer("10 - 4", 5)).toBe(false);
+      expect(isCorrectAnswer("12 - 6", 6)).toBe(true);
+      expect(isCorrectAnswer("12 - 6", 5)).toBe(false);
     });
 
     test("correctly evaluates multiplication", () => {
-      expect(isCorrectAnswer("6 * 7", 42)).toBe(true);
-      expect(isCorrectAnswer("6 * 7", 41)).toBe(false);
+      expect(isCorrectAnswer("5 * 5", 25)).toBe(true);
+      expect(isCorrectAnswer("5 * 5", 30)).toBe(false);
     });
 
     test("correctly evaluates division", () => {
-      expect(isCorrectAnswer("20 / 4", 5)).toBe(true);
-      expect(isCorrectAnswer("20 / 4", 6)).toBe(false);
+      expect(isCorrectAnswer("25 / 5", 5)).toBe(true);
+      expect(isCorrectAnswer("25 / 4", 6)).toBe(false);
     });
 
     test("returns false for non-numeric answers", () => {
-      expect(isCorrectAnswer("5 + 5", "ten")).toBe(false);
+      expect(isCorrectAnswer("2 + 2", "four")).toBe(false);
     });
   });
 });
