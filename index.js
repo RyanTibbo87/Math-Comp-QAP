@@ -55,9 +55,9 @@ app.post("/quiz", (req, res) => {
   }
 });
 
-app.get("/leaderboard", (req, res) => {
+app.get("/leaderboards", (req, res) => {
   const leaderboard = getLeaderboard();
-  res.render("leaderboard", { leaderboard });
+  res.render("leaderboards", { leaderboard });
 });
 app.post("/leaderboards", (req, res) => {
   const playerName = req.body.playerName;

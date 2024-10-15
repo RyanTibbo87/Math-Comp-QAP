@@ -58,6 +58,8 @@ function isCorrectAnswer(question, userAnswer) {
   return Math.abs(correctAnswer - userAnswer) < 0.01;
 }
 
+let leaderboard = [];
+
 function updateLeaderboard(playerName, streak) {
   const timestamp = new Date().toLocaleString();
   leaderboard.push({ name: playerName, streak, timestamp });
