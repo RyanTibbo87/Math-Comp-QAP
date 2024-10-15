@@ -1,33 +1,71 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 const port = 3000;
+const {
+  getQuestion,
+  isCorrectAnswer,
+  updateLeaderboard,
+  getLeaderboard,
+} = require("./utils/mathUtilities");
 
-app.set('view engine', 'ejs');
+app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true })); // For parsing form data
-app.use(express.static('public')); // To serve static files (e.g., CSS)
+app.use(express.static("public")); // To serve static files (e.g., CSS)
 
+let currentQuestion = null;
+let streak = 0;
+let leaderboard = [];
 
-//Some routes required for full functionality are missing here. Only get routes should be required
-app.get('/', (req, res) => {
-    res.render('index');
+app.get("/", (req, res) => {
+  res.render("index", { streak, leaderboard });
 });
 
-app.get('/quiz', (req, res) => {
-    res.render('quiz');
+app.get("/quiz", (req, res) => {
+  currentQuestion = getQuestion();
+  res.render("quiz", { question: currentQuestion.question, streak });
 });
 
-//Handles quiz submissions.
-app.post('/quiz', (req, res) => {
-    const { answer } = req.body;
-    console.log(`Answer: ${answer}`);
+app.post("/quiz", (req, res) => {
+  const { answer } = req.body;
+  const userAnswer = parseFloat(answer);
 
-    //answer will contain the value the user entered on the quiz page
-    //Logic must be added here to check if the answer is correct, then track the streak and redirect properly
-    //By default we'll just redirect to the homepage again.
-    res.redirect('/');
+  if (isCorrectAnswer(currentQuestion.question, userAnswer)) {
+    streak++;
+    res.render("result", {
+      correct: true,
+      streak,
+      question: currentQuestion.question,
+      userAnswer,
+      correctAnswer: currentQuestion.answer,
+    });
+  } else {
+    if (streak > 0) {
+      leaderboard.push(streak);
+      leaderboard.sort((a, b) => b - a);
+      leaderboard = leaderboard.slice(0, 10);
+    }
+    res.render("result", {
+      correct: false,
+      streak,
+      question: currentQuestion.question,
+      userAnswer,
+      correctAnswer: currentQuestion.answer,
+    });
+    streak = 0;
+  }
 });
 
-// Start the server
+app.get("/leaderboard", (req, res) => {
+  const leaderboard = getLeaderboard();
+  res.render("leaderboard", { leaderboard });
+});
+app.post("/leaderboards", (req, res) => {
+  const playerName = req.body.playerName;
+  const streak = req.session.streak || 0;
+  updateLeaderboard(playerName, streak);
+  res.redirect("/leaderboards");
+});
+
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server running at http://localhost:${port}`);
 });

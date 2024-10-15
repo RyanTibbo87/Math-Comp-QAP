@@ -1,0 +1,21 @@
+<!-- Ryan Tibbo
+ QAP - Math Comp
+ October 15th, 2024 -->
+
+<%- include('partials/header') %>
+<main class="main-content leaderboard_container">
+  <h1>Leaderboard</h1>
+  <% if (leaderboard.length > 0) { %>
+  <ol class="leaderboard-list">
+    <% leaderboard.forEach((score, index) => { %>
+    <li>
+      <span class="rank"><%= index + 1 %></span
+      ><span class="score"><%= score %></span>
+    </li>
+    <% }); %>
+  </ol>
+  <% } else { %>
+  <p>No other scores evaluated</p>
+  <% } %>
+  <a href="/" class="btn">Back to Home</a>
+</main>

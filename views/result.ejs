@@ -1,0 +1,21 @@
+<!-- Ryan Tibbo
+ QAP - Math Comp
+ October 15th, 2024 -->
+
+<%- include('partials/header') %>
+<main class="main-content result_container">
+  <h1>Quiz Result</h1>
+  <% if (correct) { %>
+  <p class="result correct">Correct!</p>
+  <% } else { %>
+  <p class="result incorrect">Incorrect!</p>
+  <% } %>
+  <p class="question">Question: <%= question %></p>
+  <p class="answer">Your answer: <%= userAnswer %></p>
+  <p class="answer">Correct answer: <%= correctAnswer %></p>
+  <p class="streak">Current streak: <%= streak %></p>
+  <div class="navigation__container">
+    <a href="/quiz" class="btn">Next Question</a>
+    <a href="/" class="btn">Back to Home</a>
+  </div>
+</main>
